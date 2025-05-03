@@ -84,7 +84,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
   chatScript.onload = function() {
     if (window.chatSystem) {
-      console.log("Chat system loaded successfully");
     }
   };
 });
@@ -189,16 +188,13 @@ if (createRoom) {
 
 startAll.onclick = () => {
 
-  console.log(rooms)
   ws.send(JSON.stringify({type: 'startAll', id: clientId}))
     
   // Remove chat container after game starts
  const chatContainer = document.querySelector('.chat-container'); // Update the class if needed
   if (chatContainer) {
-    console.log('Chat container found, removing...');
     chatContainer.remove();
   } else {
-    console.log('Chat container not found.');
   }
 }
 
@@ -207,7 +203,6 @@ let isClicked = false;
 if (createRoom) {
   createRoom.addEventListener("click", () => {
     isClicked = true;
-    console.log("Room created!");
   });
 }
 
@@ -236,7 +231,6 @@ ws.onmessage = (event) => {
 let kickButton;
 
 if (data.type === 'lst') {
-  console.log(clientLst);
   
   // Update player list using the chat system
   if (window.chatSystem && data.lst && data.lst.length > 0) {
@@ -286,7 +280,6 @@ if (data.type === 'lst') {
         }
 
         kickButton.onclick = () => {
-          console.log(divClient.innerText);
           let RoomId = data.roomId;
 
           if (isClicked) {
@@ -352,16 +345,12 @@ if (data.type === 'lst') {
 
 
   if (data.type == "kickedHost") {
-    console.log("hello")  
 
-    console.log(playerName.value)
 
     if (playerName.value == data.removedClient) {
-      console.log("bye")
       location.reload();
     }
 
-    console.log(data.host)
     if (data.removedClient == data.host) {
       const gameContent = document.querySelector('.game-content-area') || document.body;
       gameContent.appendChild(returnButton);
@@ -374,12 +363,8 @@ if (data.type === 'lst') {
 
   if (data.type == "kick") {
     if (!isClicked) {
-      console.log("hello")  
-
-      console.log(playerName.value)
 
       if (joinNameInput.value == data.removedClient) {
-        console.log("bye")
         location.reload();
       }
 
@@ -393,8 +378,6 @@ if (data.type === 'lst') {
         }
       });
 
-      console.log(data.host)
-      console.log(data.removedClient)
       if (data.removedClient == data.host) {
         const gameContent = document.querySelector('.game-content-area') || document.body;
         gameContent.appendChild(returnButton);
@@ -404,25 +387,20 @@ if (data.type === 'lst') {
         }
       }
     } else {
-      console.log(isClicked)
 
-      console.log(playerName.value)
 
       if (playerName.value == data.removedClient) {
-        console.log("bye")
         location.reload();
       }
 
       document.querySelectorAll('div').forEach(el => {
         if (el.textContent.trim() === data.removedClient) {
           const kickButton = el.nextElementSibling;
-          console.log("helldnskajkdbkqwb")
           el.remove();
           if (kickButton) kickButton.remove();
         }
       });
 
-      console.log(`removed client ${data.removedClient}`)
       
       if (window.chatSystem) {
         window.chatSystem.addSystemMessage(`${data.removedClient} has been removed from the room.`);
@@ -454,13 +432,10 @@ if (data.type === 'lst') {
 if (joinRoom) {
   joinRoom.onclick = () => {
 
-    console.log(rooms)
     let roomIdInput = document.getElementById('roomIdInput')
 
     if (rooms.has(roomIdInput.value)) {
       rooms.get(roomIdInput.value).add(playerName.value)
-      console.log(rooms)
-      console.log(clientId)
     };
 
     localStorage.setItem('playerName', joinNameInput.value);
@@ -535,10 +510,8 @@ function startGame() {
   let gameContentArea = document.querySelector('.game-content-area');
    const chatContainer = document.querySelector('.chat-container'); // Update the class if needed
   if (chatContainer) {
-    console.log('Chat container found, removing...');
     chatContainer.remove();
   } else {
-    console.log('Chat container not found.');
   }
     let clientContainer = document.querySelector('.client-container');
   
@@ -548,7 +521,6 @@ function startGame() {
   }
 
   // Other game start logic goes here (e.g., triggering the game state)
-  console.log('Game started!');
 
   // Your logic to start the game goes here...
   if (!gameContentArea) {
@@ -598,8 +570,6 @@ function startGame() {
 
     let br = document.createElement("br");
     if (data.type === 'w') {
-      console.log(data.num);
-      console.log(data.cList);
 
       cList = data.cList;
       for (let index = 0; index < data.num; index++) {
@@ -636,7 +606,6 @@ function startGame() {
         container.appendChild(bar);
       }
 
-      console.log('hello');
     }
 
 
@@ -799,8 +768,8 @@ if (data.type == 'completed') {
           const timeset = setInterval(() => {
             currTime++;
           
-            console.log(num - mistakeCount)
-            console.log(wpmMap)
+            
+            
 
             wpmMap.push((num - mistakeCount) * 12 / currTime)
 
@@ -820,7 +789,7 @@ if (playerName && playerName.value.trim() !== '') {
 
             let x = num - mistakeCount
             if (x === h3.textContent.length) {
-              console.log(clientTime)
+              
 
                 const chartContainer = document.createElement('div');
 chartContainer.className = 'chart-container';
@@ -844,7 +813,6 @@ gameContentArea.appendChild(chartContainer);
               }
 
               // Log xyValues to see the data
-              console.log(xyValues);
 
               // Create the chart
               new Chart("myChart", {
@@ -1009,15 +977,8 @@ const getProtectedData = async () => {
     }
 
   } else {
-    console.log("No token found");
 
-    // Redirect only if not already on the main page
-    if (
-      window.location.pathname !== "/mainpage/main.html" &&
-      window.location.pathname.includes("main.html")
-    ) {
-      window.location.href = "./mainpage/main.html";
-    }
+      window.location.href = "mainpage/main.html";
 
     if (logoutButton) logoutButton.style.display = "none";
     if (signUpButton) signUpButton.style.display = "inline-block";
@@ -1034,7 +995,6 @@ const logout = () => {
   if (logoutButton) logoutButton.style.display = "none";
   if (signUpButton) signUpButton.style.display = "inline-block";
 
-  console.log("Logged out successfully!");
 
   // Optional: redirect to login page
   // window.location.href = "./login.html";
