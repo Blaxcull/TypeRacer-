@@ -138,24 +138,24 @@ document.addEventListener('DOMContentLoaded', function() {
     if(token){
 
         singlePlayerBtn.addEventListener('click', function(e) {
-            window.location.href = '../single.html'
+            window.location.href = '../singlePlayer/single.html'
             e.preventDefault();
         });
 
         multiplayerBtn.addEventListener('click', function(e) {
             e.preventDefault();
-            window.location.href = '../main.html'
+            window.location.href = '../multiplayer/main.html'
         });
     }
     if(!token){
 
         singlePlayerBtn.addEventListener('click', function(e) {
-            window.location.href = 'signup/signIn/signUp.html'
+            window.location.href = '../signIn/signUp.html'
             e.preventDefault();
         });
 
         multiplayerBtn.addEventListener('click', function(e) {
-            window.location.href = 'signup/signIn/signUp.html'
+            window.location.href = '../signIn/signUp.html'
             e.preventDefault();
         });
 

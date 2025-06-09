@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TypeMaster - Improve Your Typing Skills</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&family=Inter:wght@300;400;600&display=swap">
+
+  <link rel="stylesheet" href="../mainpage/css/styles.css">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+</head>
+<body>
+    <div id="particles-js"></div>
+  
+      <header class="header">
+    <div class="container">
+      <div class="logo">
+        <div class="logo-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="keyboard-icon">
+            <rect width="20" height="16" x="2" y="4" rx="2" ry="2"></rect>
+            <path d="M6 8h.01"></path>
+            <path d="M10 8h.01"></path>
+            <path d="M14 8h.01"></path>
+            <path d="M18 8h.01"></path>
+            <path d="M8 12h.01"></path>
+            <path d="M12 12h.01"></path>
+            <path d="M16 12h.01"></path>
+            <path d="M7 16h10"></path>
+          </svg>
+        </div>
+<a href="../mainpage/main.html">
+    <span id = 'speed'>SpeedType Master</span>
+</a>      </div>
+      <nav class="nav">
+        <ul class="nav-list">
+          <li><a href="../signIn/signUp.html" class="nav-link btn-signup" id= 'signUp'>Sign Up</a></li>
+          <li><a href="" class="nav-link btn-signup" id= 'LogOut'>LogOut</a></li>
+        </ul>
+        <button class="mobile-menu-toggle" aria-label="Toggle menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+
+  <main class="container">
+    <section class="typing-test">
+      <h2>Test Your Typing Speed</h2>
+      
+      <div class="difficulty-controls">
+        <button class="btn btn-primary active" data-difficulty="easy">Easy</button>
+        <button class="btn btn-primary" data-difficulty="medium">Medium</button>
+        <button class="btn btn-primary" data-difficulty="hard">Hard</button>
+      </div>
+      
+      <div class="stats-display">
+        <div class="stat">
+          <span class="stat-label">Time:</span>
+          <span class="stat-value" id="timer">60s</span>
+        </div>
+        <div class="stat">
+          <span class="stat-label">WPM:</span>
+          <span class="stat-value" id="wpm">0</span>
+        </div>
+        <div class="stat">
+          <span class="stat-label">Accuracy:</span>
+          <span class="stat-value" id="accuracy">100%</span>
+        </div>
+      </div>
+      
+      <div class="typing-area">
+        <div id="text-display" class="text-display"></div>
+        <input type="text" id="typing-input" class="typing-input" placeholder="Start typing here..." autocomplete="off">
+      </div>
+      
+      <div id= "btnc">
+        
+          <button id="restart-btn" class="btn btn-secondary">Restart Test</button>
+      </div>
+    </section>
+  </main>
+
+  <script src="js/particles-config.js"></script>
+  <script src="js/typing-test.js"></script>
+  <script src="js/stats.js"></script>
+</body>
+</html>

@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SpeedType Master - Multiplayer Typing Game</title>
+  <link rel="stylesheet" href="main.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Orbitron:wght@500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header class="header">
+    <div class="container">
+      <div class="logo">
+        <div class="logo-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="keyboard-icon">
+            <rect width="20" height="16" x="2" y="4" rx="2" ry="2"></rect>
+            <path d="M6 8h.01"></path>
+            <path d="M10 8h.01"></path>
+            <path d="M14 8h.01"></path>
+            <path d="M18 8h.01"></path>
+            <path d="M8 12h.01"></path>
+            <path d="M12 12h.01"></path>
+            <path d="M16 12h.01"></path>
+            <path d="M7 16h10"></path>
+          </svg>
+        </div>
+<a href="../mainpage/main.html" style="all: unset;">
+  <span id = 'speed'>SpeedType Master</span>
+</a>
+      </div>
+      <nav class="nav">
+        <ul class="nav-list">
+          <li><a href="../mainpage/signup/signIn/signUp.html" class="nav-link btn-signup" id="signUp">Sign Up</a></li>
+          <li><a href="" class="nav-link btn-signup" id="LogOut">LogOut</a></li>
+        </ul>
+        <button class="mobile-menu-toggle" aria-label="Toggle menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <div class="game">
+    <div class="game-container">
+      <div class="room-controls">
+        <div class="control-card">
+          <h2 id="create-room">Create Room</h2>
+          <div class="input-group">
+            <input id="PlayerNameInput" class="cyber-input" placeholder="Enter Your Name" />
+          </div>
+          <button id="create_room" class="btn btn-primary btn-glow">
+            <span class="btn-text">Create New Room</span>
+          </button>
+        </div>
+
+        <div class="control-card">
+          <h2>Join Room</h2>
+          <div class="input-group">
+            <input id="roomIdInput" class="cyber-input" placeholder="Enter Room ID" />
+          </div>
+          <div class="input-group">
+            <input id="JoinPlayerNameInput" class="cyber-input" placeholder="Enter Your Name" />
+          </div>
+          <button id="joinRoom" class="btn btn-secondary btn-glow">
+            <span class="btn-text">Join Room</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="game-stats">
+        <div class="player-list" id="playerList"></div>
+        <canvas id="myChart"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.0/dist/chart.min.js"></script>
+  <script src="main.js"></script>
+</body>
+</html>
