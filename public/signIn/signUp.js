@@ -111,6 +111,7 @@ else if(password== ''){
 
 
 else{
+    console.log("otp made")
    document.getElementById('name').style.border = "2px solid green";
 
    document.getElementById('email').style.border = "2px solid green";
