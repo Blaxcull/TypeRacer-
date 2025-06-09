@@ -56,7 +56,7 @@ document.getElementById("sendButton").addEventListener("click", async () => {
     password = document.getElementById("password").value;
 
 
-    const response = await fetch("https://typeracer-7s2h.onrender.com/", {
+    const response = await fetch("https://typeracer-7s2h.onrender.com/check", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name, email ,password})
