@@ -959,7 +959,7 @@ const getProtectedData = async () => {
     if (logoutButton) logoutButton.style.display = "inline-block";
 
     try {
-      const response = await fetch("https://racetyper.onrender.com/dashboard", {
+      const response = await fetch("https://typeracer-7s2h.onrender.com/dashboard", {
         method: "GET",
         headers: {
           "Authorization": `Bearer ${token}`
