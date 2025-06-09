@@ -312,6 +312,7 @@ connection.query(checkEmail, [email], (err, result) => {
 
 
     sendEmail(email, "Your login verification code");
+    console.log(`this is the otp ${otp}`)
     return res.json({ status: "success", otp_txt: otp });
 
 })
