@@ -274,62 +274,67 @@ console.log(code);
 
 
 app.post("/", (req, res) => {
-    const { name, email, password } = req.body;
-    const otp = generateOtp(); // make sure this is defined
-    console.log("Received Data:", req.body);
-    console.log(`OTP to be sent: ${otp}`);
 
+    const { name, email, password } = req.body;
+    console.log("Received Data:", req.body);  // Log request data
+    console.log("Extracted Values:", name, email, password);
+
+    console.log(`this is the otp ${otp}`)
     if (!name || !email || !password) {
         return res.status(400).json({ error: "Missing fields" });
     }
 
-    const checkDBQuery = "SHOW DATABASES LIKE ?";
-    const checkName = "SELECT * FROM users WHERE name = ?";
     const checkEmail = "SELECT * FROM users WHERE email = ?";
+    const checkName= "SELECT * FROM users WHERE name = ?";
+const checkDBQuery = "SHOW DATABASES LIKE ?";
 
-    // Check if 'bank' database exists
-    connection.query(checkDBQuery, ['bank'], (err, result) => {
-        if (err) {
-            console.log("Database check error:", err);
-            return res.status(500).json({ error: "Database error" });
-        }
 
-        if (result.length === 0) {
-            console.log("Database 'bank' does NOT exist");
-            return res.json({ status: "db not exist" });
-        }
+connection.query(checkDBQuery, ['bank'], (err, result) => {
+    if (err) {
+        console.log("Database check error:", err);
+        return res.status(500).json({ error: "Database error" });
+    }
 
-        // Now check if user name exists
-        connection.query(checkName, [name], (err, result) => {
-            if (err) {
-                console.log("Name check error:", err);
-                return res.status(500).json({ error: "User error" });
-            }
-
-            if (result.length > 0) {
-                console.log("User already exists");
-                return res.json({ status: "user already exist" });
-            }
-
-            // Now check if email exists
-            connection.query(checkEmail, [email], (err, result) => {
-                if (err) {
-                    console.log("Email check error:", err);
-                    return res.status(500).json({ error: "Email error" });
-                }
-
-                if (result.length > 0) {
-                    console.log("Email already exists");
-                    return res.json({ status: "email already exist" });
-                }
-
-                // All checks passed — send OTP
-                sendEmail(email, `Your login verification code: ${otp}`);
-                return res.json({ status: "success", otp_txt: otp });
-            });
-        });
-    });
+    if (result.length > 0) {
+        console.log("Database 'bank' exists");
+        return res.json({ exists: true });
+    } else {
+        console.log("Database 'bank' does NOT exist");
+        return res.json({ exists: false });
+    }
 });
+
+connection.query(checkName, [name], (err, result) => {
+    if (err) {
+        console.log("Database error");
+        return res.status(500).json({ error: "user error" });
+    }
+
+    if (result.length > 0 ) {
+        console.log('user already exist')
+        return res.json({ status: "user already exist" });
+    }
+
+
+connection.query(checkEmail, [email], (err, result) => {
+    if (err) {
+        console.log("Database error");
+        return res.status(500).json({ error: "email error" });
+    }
+
+    if (result.length > 0 ) {
+        console.log('email already exist')
+        return res.json({ status: "email already exist" });
+    }
+
+
+    sendEmail(email, "Your login verification code");
+    return res.json({ status: "success", otp_txt: otp });
+
+})
+
+});
+})
 
 
 app.post("/", async(req, res) => {
