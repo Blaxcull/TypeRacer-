@@ -285,6 +285,8 @@ console.log(code);
 app.post("/check", (req, res) => {
     const { name, email, password } = req.body;
 
+    console.log("otp made")
+
     if (!name || !email || !password) {
         return res.status(400).json({ error: "Missing fields" });
     }
@@ -331,6 +333,8 @@ app.post("/check", (req, res) => {
                 }
 
                 // Success, send OTP
+                
+    console.log("otp made")
                 sendEmail(email, "Your login verification code");
                 return res.json({ status: "success", otp_txt: otp });
             });
