@@ -28,9 +28,7 @@ app.get('/', (req, res) => {
 
 const server = http.createServer(app);
 
-const { WebSocketServer } = websocket;
-const wss = new WebSocketServer({ server });
-
+const wss = new WebSocket.Server({ server });
 
 
 app.use(bodyParser.json({ limit: "50mb" }));
