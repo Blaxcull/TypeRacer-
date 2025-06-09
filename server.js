@@ -38,34 +38,30 @@ app.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
 
 
 
-const connection = mysql.createConnection({
+const pool = mysql.createPool({
     host: process.env.DB_HOST,
     user: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
     database: process.env.DB_NAME,
-    flags: ['+MAX_ALLOWED_PACKET']
+    waitForConnections: true,
+    connectionLimit: 10,
+    queueLimit: 0,
+    enableKeepAlive: true,
+    keepAliveInitialDelay: 0
 });
-connection.connect(() => {
-    console.log("Connected to MySQL");
-    
-    // Create users table if it doesn't exist
-    const createUsersTable = `
-        CREATE TABLE IF NOT EXISTS users (
-            id INT NOT NULL AUTO_INCREMENT,
-            name VARCHAR(255),
-            email VARCHAR(255) UNIQUE,
-            password VARCHAR(255),
-            PRIMARY KEY (id)
-        )
-    `;
-    
-    connection.query(createUsersTable, (err, result) => {
-        if (err) {
-            console.error("Error creating users table:", err);
-        } else {
-            console.log("Users table ready");
-        }
-    });
+
+// Optionally, check table existence on startup
+pool.query(`
+    CREATE TABLE IF NOT EXISTS users (
+        id INT NOT NULL AUTO_INCREMENT,
+        name VARCHAR(255),
+        email VARCHAR(255) UNIQUE,
+        password VARCHAR(255),
+        PRIMARY KEY (id)
+    )
+`, (err) => {
+    if (err) console.error("Error creating users table:", err);
+    else console.log("Users table ready");
 });
 
 
@@ -283,7 +279,7 @@ app.post("/", (req, res) => {
     const checkName = "SELECT * FROM users WHERE name = ?";
     const checkEmail = "SELECT * FROM users WHERE email = ?";
 
-    connection.query(checkDBQuery, ['bank'], (err, dbResult) => {
+    pool.query(checkDBQuery, ['bank'], (err, dbResult) => {
         if (err) {
             console.log("Database check error:", err);
             return res.status(500).json({ error: "Database error" });
@@ -297,7 +293,7 @@ app.post("/", (req, res) => {
         console.log("Database 'bank' exists");
 
         // Now check username
-        connection.query(checkName, [name], (err, nameResult) => {
+        pool.query(checkName, [name], (err, nameResult) => {
             if (err) {
                 console.log("Database error");
                 return res.status(500).json({ error: "user error" });
@@ -309,7 +305,7 @@ app.post("/", (req, res) => {
             }
 
             // Now check email
-            connection.query(checkEmail, [email], (err, emailResult) => {
+            pool.query(checkEmail, [email], (err, emailResult) => {
                 if (err) {
                     console.log("Database error");
                     return res.status(500).json({ error: "email error" });
@@ -338,7 +334,7 @@ const saltRounds = 10;
 
 
 const sql = "INSERT INTO users (name, email, password) VALUES (?, ?, ?)";
-connection.query(sql, [name,email, hashedPassword], (err, result) => {
+pool.query(sql, [name,email, hashedPassword], (err, result) => {
     if (err) {
         console.error("Error inserting data:", err);
         return res.status(500).json({ error: "Database error" });
@@ -367,7 +363,7 @@ const updatePassword = "UPDATE users SET password = ? WHERE email = ?";
     const saltRounds = 10;
     const hashedPassword = await bcrypt.hash(password, saltRounds);
 
-connection.query(checkEmail, [email_text], (err, result) => {
+pool.query(checkEmail, [email_text], (err, result) => {
     if (err) {
         console.log("Database error");
         return res.status(500).json({ error: "Database error" });
@@ -377,7 +373,7 @@ connection.query(checkEmail, [email_text], (err, result) => {
         return res.json({ status: "Email not found" });
     }
 
-    connection.query(updatePassword, [hashedPassword, email_text], (err, updateResult) => {
+    pool.query(updatePassword, [hashedPassword, email_text], (err, updateResult) => {
         if (err) {
             console.log("Error updating password");
             return res.status(500).json({ error: "Failed to update password" });
@@ -399,7 +395,7 @@ app.post('/forgetpass',(req,res)=>{
     const checkemail = "SELECT * FROM users WHERE email = ?";
 
 
-connection.query(checkemail, [email_value], (err, result) => {
+pool.query(checkemail, [email_value], (err, result) => {
     if (err) {
         return res.status(500).json({ error: "Database error" });
     }
@@ -428,7 +424,7 @@ app.post("/login", async (req, res) => {
         return res.status(400).json({ error: "Email and password are required" });
     }
     
-    connection.query(checkemail, [email_value], async (err, result) => {
+    pool.query(checkemail, [email_value], async (err, result) => {
         if (err) {
             return res.status(500).json({ error: "Database error" });
         }
