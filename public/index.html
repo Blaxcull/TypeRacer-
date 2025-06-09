@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SpeedType Master - Home</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #1e1e2e 0%, #2a2a3e 100%);
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .container {
+            text-align: center;
+            max-width: 800px;
+            padding: 2rem;
+        }
+        
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #6c2bd9, #39ff14);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .nav-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .nav-card {
+            background: rgba(108, 43, 217, 0.1);
+            border: 2px solid rgba(108, 43, 217, 0.3);
+            border-radius: 12px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: white;
+            display: block;
+        }
+        
+        .nav-card:hover {
+            transform: translateY(-5px);
+            border-color: #6c2bd9;
+            box-shadow: 0 10px 30px rgba(108, 43, 217, 0.3);
+        }
+        
+        .nav-card h3 {
+            margin: 0 0 1rem 0;
+            color: #39ff14;
+        }
+        
+        .nav-card p {
+            margin: 0;
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>SpeedType Master</h1>
+        <p>Choose your typing adventure!</p>
+        
+        <div class="nav-grid">
+            <a href="mainpage/main.html" class="nav-card">
+                <h3>🏠 Main Page</h3>
+                <p>Start your typing journey from the main landing page</p>
+            </a>
+            
+            <a href="singlePlayer/single.html" class="nav-card">
+                <h3>🎯 Single Player</h3>
+                <p>Practice your typing skills solo with different difficulty levels</p>
+            </a>
+            
+            <a href="multiplayer/main.html" class="nav-card">
+                <h3>🏁 Multiplayer</h3>
+                <p>Race against other players in real-time typing competitions</p>
+            </a>
+            
+            <a href="room_making/main.html" class="nav-card">
+                <h3>🏗️ Room System</h3>
+                <p>Create or join custom typing rooms</p>
+            </a>
+            
+            <a href="signIn/signUp.html" class="nav-card">
+                <h3>📝 Sign Up</h3>
+                <p>Create your account to track progress and compete</p>
+            </a>
+            
+            <a href="signIn/signIn.html" class="nav-card">
+                <h3>🔐 Sign In</h3>
+                <p>Log in to your existing account</p>
+            </a>
+        </div>
+    </div>
+</body>
+</html>
