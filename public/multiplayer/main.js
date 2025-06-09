@@ -1,5 +1,5 @@
 let mistakeCount = 0
-const ws = new WebSocket('ws://localhost:3000');
+const ws = new WebSocket('wss://typeracer-7s2h.onrender.com');
 
 let rank;
 const completedClients = new Set();
