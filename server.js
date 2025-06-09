@@ -53,17 +53,37 @@ const pool = mysql.createPool({
 });
 
 // Optionally, check table existence on startup
-pool.query(`
-    CREATE TABLE IF NOT EXISTS users (
-        id INT NOT NULL AUTO_INCREMENT,
-        name VARCHAR(255),
-        email VARCHAR(255) UNIQUE,
-        password VARCHAR(255),
-        PRIMARY KEY (id)
-    )
-`, (err) => {
-    if (err) console.error("Error creating users table:", err);
-    else console.log("Users table ready");
+// Create the 'bank' database if it doesn't exist
+pool.query(`CREATE DATABASE IF NOT EXISTS bank`, (err) => {
+    if (err) {
+        console.error("Error creating database 'bank':", err);
+    } else {
+        console.log("Database 'bank' is ready");
+
+        // Now use the 'bank' database
+        pool.query(`USE bank`, (err) => {
+            if (err) {
+                console.error("Error selecting 'bank' database:", err);
+            } else {
+                // Then create the 'users' table
+                pool.query(`
+                    CREATE TABLE IF NOT EXISTS users (
+                        id INT NOT NULL AUTO_INCREMENT,
+                        name VARCHAR(255),
+                        email VARCHAR(255) UNIQUE,
+                        password VARCHAR(255),
+                        PRIMARY KEY (id)
+                    )
+                `, (err) => {
+                    if (err) {
+                        console.error("Error creating users table:", err);
+                    } else {
+                        console.log("Users table ready in 'bank' database");
+                    }
+                });
+            }
+        });
+    }
 });
 
 
