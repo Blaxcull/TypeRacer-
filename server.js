@@ -282,7 +282,7 @@ console.log(code);
     }
 }
 
-app.post("/", (req, res) => {
+app.post("/verify", (req, res) => {
     const { name, email, password } = req.body;
 
     if (!name || !email || !password) {
