@@ -28,7 +28,8 @@ app.get('/', (req, res) => {
 
 const server = http.createServer(app);
 
-const wss = new websocket.Server({server});
+const { WebSocketServer } = websocket;
+const wss = new WebSocketServer({ server });
 
 
 
@@ -41,6 +42,7 @@ app.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
 const pool = mysql.createPool({
     host: process.env.DB_HOST,
     user: process.env.DB_USER,
+    port: process.env.DB_PORT || 3306,
     password: process.env.DB_PASSWORD,
     database: process.env.DB_NAME,
     waitForConnections: true,
@@ -70,7 +72,7 @@ pool.query(`
 
 // Add connection test
 pool.getConnection((err, connection) => {
-  if (err) {
+    if (err) {
     console.error("Database connection failed:", err);
     process.exit(1); // Exit if DB connection fails
   }
