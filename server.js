@@ -330,7 +330,7 @@ app.post("/check", (req, res) => {
 
 
 
-app.post("/", async(req, res) => {
+app.post("/verify", async(req, res) => {
     console.log("hello post")
     const {verify, name, email, password } = req.body;
 const saltRounds = 10;
