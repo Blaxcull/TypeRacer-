@@ -66,6 +66,18 @@ pool.query(`
 
 
 
+
+
+// Add connection test
+pool.getConnection((err, connection) => {
+  if (err) {
+    console.error("Database connection failed:", err);
+    process.exit(1); // Exit if DB connection fails
+  }
+  console.log("Database connected successfully");
+  connection.release();
+});
+
 const transporter = nodemailer.createTransport({
 host: process.env.SMTP_HOST,
     port: parseInt(process.env.SMTP_PORT, 10),
