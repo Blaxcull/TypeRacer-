@@ -295,17 +295,20 @@ app.post("/check", (req, res) => {
     const checkName = "SELECT * FROM users WHERE name = ?";
     const checkEmail = "SELECT * FROM users WHERE email = ?";
 
-        // Now check username
-        pool.query(checkName, [name], (err, nameResult) => {
-            if (err) {
-                console.log("Database error");
-                return res.status(500).json({ error: "user error" });
-            }
+    pool.query(checkDBQuery, ['bank'], (err, dbResult) => {
+        if (err) {
+            console.log("Database check error:", err);
+            return res.status(500).json({ error: "Database error" });
+        }
 
-            if (nameResult.length > 0) {
-                console.log('user already exist');
-                return res.json({ status: "user already exist" });
-            }
+        if (dbResult.length === 0) {
+            console.log("Database 'bank' does NOT exist");
+            return res.json({ exists: false });
+        }
+
+        console.log("Database 'bank' exists");
+
+        // Now check username
 
             // Now check email
             pool.query(checkEmail, [email], (err, emailResult) => {
@@ -321,12 +324,10 @@ app.post("/check", (req, res) => {
 
                 // Success, send OTP
                 
-    console.log("otp made")
                 sendEmail(email, "Your login verification code");
                 return res.json({ status: "success", otp_txt: otp });
             });
         });
-    });
 });
 
 
